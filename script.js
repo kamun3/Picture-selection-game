@@ -96,16 +96,23 @@ function resetGame() {
   selectedImage = null;
   selectButton.style.display = "inline-block";
 
-  // إرسال إلى Webhook
-  fetch("https://discord.com/api/webhooks/1381319218821337271/yCzV8vwqBSOaREM7iBeFkumzOPNYU09DE3MmYEXHDBe4DdiaBcUr7WbNGc0iewuT3q0u", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: "🔄 تم إعادة اللعبة بواسطة أحد المستخدمين."
-    })
-  });
+ // رابط Webhook مشفّر (Base64)
+const encodedWebhook = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM4NDE4ODM2MDMyNjc3OTAxMC9HdkhheVRHMndVcXpCUU1zQngzOHV6cy1JWV85c1JDWVdsaVNDUUZXa2VOYVFDYml2cERsWlBCSU13VEk3anRlQVp rVA==";
+
+// فك التشفير
+const webhookUrl = atob(encodedWebhook);
+
+// إرسال رسالة إلى الديسكورد
+fetch(webhookUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    content: '🔄 تم إعادة اللعبة بواسطة أحد المستخدمين.'
+  })
+});
+
 }
 
 
